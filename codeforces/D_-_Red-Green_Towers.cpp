@@ -1,29 +1,11 @@
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
+#include <bits/stdc++.h>
+using namespace std;
+ 
+static const int MOD = 1000000007;
+ 
+int main() {
+    int r,g;
+    cin>>r>>g;
  
     int h=0;
     while((h+1)*(h+2)/2<=r+g) h++;
@@ -36,7 +18,8 @@
             dp[j]=(dp[j]+dp[j-i])%MOD;
         }
     }
- 
+  
+  
     int total=h*(h+1)/2;
     int ans=0;
  
