@@ -1,40 +1,44 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define int long long
-/*
-    Author : Zenith
-*/
-int maxi=200001;
-int mod=1e9+7;
-vector<int>dp(maxi,0);
-void compute(){
-    for(int i=0;i<9;i++) dp[i]=2;
-    dp[9]=3;
-    for(int i=10;i<=maxi;i++){
-        dp[i]=dp[i-9]+dp[i-10];
-    }
-}
+
 void solve(){
-    int n,m;
-    cin>>n>>m;
-    int ans=0;
-    while(n>0){
-        int r= n%10;
-        int add =(m+r<9 ? 1 : dp[m+r-10]);
-        ans+=add;
-        n/=10;
+    int n;
+    cin>>n;
+    vector<int>arr(n);
+    for(auto &x:arr) cin>>x;
+
+    vector<long long>pref(n+1,0);
+    for(int i=1;i<=n;i++){
+        pref[i]=pref[i-1]+arr[i-1];
     }
+
+    long long sum=pref[n];
+    if(sum%3){
+        cout<<0<<endl;
+        return;
+    }
+
+    long long t1=sum/3;
+    long long t2=2*sum/3;
+
+    vector<int>cnt(n+1,0);
+
+    for(int i=n;i>=1;i--){
+        cnt[i]=cnt[i+1];
+        if(pref[i]==t2) cnt[i]++;
+    }
+
+    long long ans=0;
+    for(int i=1;i<=n-2;i++){
+        if(pref[i]==t1){
+            ans+=cnt[i+1];
+        }
+    }
+
     cout<<ans<<endl;
 }
 
-signed main(){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    compute();
-    int t;
-    cin>>t;
-    while(t--) {
-        solve();
-    }
+int main(){
+    solve();
     return 0;
 }
