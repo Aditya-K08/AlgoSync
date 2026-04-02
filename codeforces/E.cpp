@@ -1,36 +1,29 @@
 #include<bits/stdc++.h>
 using namespace std;
 void solve(){
-    int n;
-    cin>>n;
-    vector<string>arr(n);
+    int n,q;
+    cin>>n>>q;
+    vector<int>arr(n);
     for(auto &x:arr) cin>>x;
-    vector<int>cnt(1<<24,0);
-    for(string s:arr){
-        int mask = (1<<(s[0]-'a')) | (1<<(s[1]-'a')) | (1<<(s[2]-'a'));
-        cnt[mask]++;
+    vector<int>pref(n+1,0);
+    sort(arr.rbegin(),arr.rend());
+    for(int i=1;i<=n;i++){
+        pref[i]=pref[i-1]+arr[i-1];
     }
-    vector<int>dp=cnt;
-    for(int b=0; b<23; b++){
-        for(int mask=0; mask<(1<<22); mask++){
-            if(mask&(1<<b))
-                dp[mask]+=dp[mask^(1<<b)];
+    // cout<<q<<endl;
+    for(int i=0;i<q;i++){
+        int x;
+        cin>>x;
+        auto y=lower_bound(pref.begin(),pref.end(),x);
+        if(y==pref.end()){
+            cout<<-1<<endl;
         }
+        else cout<<y-pref.begin()<<endl;
     }
-    long long ans=0;
-    for(string s:arr){
-        int mask2=(1<<(s[0]-'a')) | (1<<(s[1]-'a')) | (1<<(s[2]-'a'));
-        for(int mask=0;mask<(1<<22);mask++){
-            //correct = n - sos[((1<<24)-1) ^ v]
-            int cor = n-dp[((1<<22)-1)^mask2];
-            ans^=cor*cor;
-        }
-    }
-    cout<<ans<<endl;
 }
 int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    solve();
+    int t;
+    cin>>t;
+    while(t--) solve();
     return 0;
 }
