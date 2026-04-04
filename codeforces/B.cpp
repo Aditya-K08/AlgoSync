@@ -1,20 +1,35 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-int main() {
-	int n,k;
-    cin>>n>>k;
-    string s;
-    cin>>s;
-    for(int i=1;i<=k;i++){
-        for(int j=1;j<n;j++){
-            if(s[j-1]=='B' && s[j]=='G'){
-                s[j]='B';
-                s[j-1]='G';
-                j++;
-            }
-        }
+void solve(){
+    int n;
+    cin>>n;
+
+    unordered_map<int,int>next;
+    unordered_map<int,int>prev;
+
+    int start=0;
+
+    for(int i=0;i<n;i++){
+        int a,b;
+        cin>>a>>b;
+        next[a]=b;
+        prev[b]=a;
+        if(a==0) start=b;
     }
-    cout<<s<<endl;
-    return 0;
+
+    vector<int>ans(n);
+    ans[0]=start;
+
+    if(n>1) ans[1]=next[start];
+
+    for(int i=2;i<n;i++){
+        ans[i]=next[ans[i-2]];
+    }
+
+    for(int x:ans) cout<<x<<" ";
+}
+
+int main(){
+    solve();
 }
