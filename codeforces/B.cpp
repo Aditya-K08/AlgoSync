@@ -1,26 +1,20 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-void solve(){
+int main() {
+	int n,k;
+    cin>>n>>k;
     string s;
     cin>>s;
-    int n=s.size();
-    stack<char>st;
-    int cnt=0;
-    int i=0;
-    while(i<n){
-        if(s[i]==')' && !st.empty()){
-            cnt+=2;
-            st.pop();
-        }else {
-            st.push(')');
+    for(int i=1;i<=k;i++){
+        for(int j=1;j<n;j++){
+            if(s[j-1]=='B' && s[j]=='G'){
+                s[j]='B';
+                s[j-1]='G';
+                j++;
+            }
         }
-        i++;
     }
-    cout<<cnt<<" ";
-}
-
-int main(){
-    solve();
+    cout<<s<<endl;
     return 0;
 }
