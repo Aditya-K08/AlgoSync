@@ -2,20 +2,6 @@
 using namespace std;
 #define int long long
 
-vector<int>primes;
-vector<bool>is_prime(200005,true);
-void seive(){
-    is_prime[0]=is_prime[1]=false;
-    for (int i=2;i*i<=200005;i++) {
-        if (is_prime[i]){
-            for (int j=i*i;j<=200005;j+=i)
-                is_prime[j]=false;
-        }
-    }
-    for(int i=0;i<=200005;i++){
-        if(is_prime[i]) primes.push_back(i);
-    }
-}
 
 void solve(){
     int n;
