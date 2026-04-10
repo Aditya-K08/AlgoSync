@@ -166,18 +166,15 @@ vector<int>factor(int n){
     return arr;
 }
 void solve(){
-    int x=-1,y=-1;
-    for(int i=1;i<=5;i++){
-        for(int j=1;j<=5;j++){
-            int n;
-            cin>>n;
-            if(n==1){
-                x=i;
-                y=j;
-            }
-        }
-    }
-    cout<<abs(x-3)+abs(y-3)<<endl;
+    int n,k,l,c,d,p,nl,np;
+    cin>>n>>k>>l>>c>>d>>p>>nl>>np;
+
+    int mili=k*l;
+    int lem=d*c;
+    int r1=mili/nl;
+    int r2=p/np;
+    int ans=min({r1,r2,lem})/n;
+    cout<<ans<<endl;
 }
 
 int32_t main(){
