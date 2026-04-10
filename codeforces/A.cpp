@@ -1,22 +1,24 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void solve(){
-    string s;
-    cin>>s;
-    int n=s.size();
-    int fours=count(s.begin(),s.end(),'4');
-    int sevens=count(s.begin(),s.end(),'7');
-    if(fours+sevens==n){
-        cout<<"YES"<<endl;
-    }else{
-        cout<<"NO"<<endl;
-    }
-}
-
 int main(){
-    int t=1;
-    // cin>>t;
-    while(t--) solve();
-    return 0;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+
+    int current = 0, capacity = 0;
+
+    for(int i = 0; i < n; i++){
+        int a, b;
+        cin >> a >> b;
+
+        current -= a;
+        current += b;
+
+        capacity = max(capacity, current);
+    }
+
+    cout << capacity << "\n";
 }
