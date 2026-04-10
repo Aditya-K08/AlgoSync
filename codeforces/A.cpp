@@ -1,215 +1,25 @@
 #include<bits/stdc++.h>
-#include <numeric>
 using namespace std;
-using namespace chrono;
-/*
-    In The Name of God :)
-*/
-#define Zenith08
-#define all(x) x.begin(),x.end()
-#define fastio() ios::sync_with_stdio(false); cin.tie(nullptr)
-#define rep(i,st,n) for(int i=st;i<n;i++)
-#define rev(i,n,st) for(int i=n;i>=0;i--)
-#define nline cout<<"\n"
-#define pyes cout<<"YES"<<endl;
-#define pno cout<<"NO"<<endl;
-#define int long long
-using p=pair<int,int>;
 
-void input(vector<int>&arr){
-    for(auto &x:arr) cin>>x;
-}
-void debug(vector<int>arr){
-    for(int x:arr) cout<<x<<" ";
-}
-/*
-5
-1
-1
-2
-*/
-
-// struct DSU{
-//     int n;
-//     vector<int>parent,sz;
-//     DSU(int n) : n(n),parent(n),sz(n,1){
-//         iota(parent.begin(),parent.end(),0);
-//     }
-//     int find(int x){
-//         if(x!=parent[x]){
-//             parent[x]=find(parent[x]);
-//         }
-//         return parent[x];
-//     }
-//     void unite(int u,int v){
-//         u=find(u);
-//         v=find(v);
-//         if(u==v) return;
-//         if(sz[u]<sz[v]) swap(u,v);
-//         parent[v]=u;
-//         sz[u]+=sz[v];
-//     }
-// };
-
-struct DSU{
-    int n,comps;
-    vector<int>parent,rankv;
-    stack<array<int,4>>st;
-
-    DSU(int n): n(n),parent(n),rankv(n,0),comps(n){
-        iota(parent.begin(),parent.end(),0);
-    }
-
-    int find(int x){
-        while(x!=parent[x]) x=parent[x];
-        return x;
-    }
-    void unite(int u,int v){
-        u=find(u);
-        v=find(v);
-        if(u==v){
-            st.push({-1,-1,-1,-1});
-            return;
-        }
-        if(rankv[u]<rankv[v]) swap(u,v);
-        st.push({v,parent[v],u,rankv[u]});
-        parent[v]=u;
-        if(rankv[u]==rankv[v]) rankv[u]++;
-        comps--;
-    }
-
-    int sz() {return (int)st.size();}
-    void rollback(int cnt){
-        while(st.size()>cnt){
-            auto[v,par,u,rnk]=st.top();
-            st.pop();
-            if(v==-1) continue;
-            parent[v]=par;
-            rankv[u]=rnk;
-            comps++;
-        }
-    }
-};
-using p=pair<int,int>;
-vector<vector<p>>tree;
-
-void add(int node,int l,int r,int ql,int qr,p e){
-    if(r<ql || qr<l) return;
-    if(ql<=l && r<=qr){
-        tree[node].push_back(e);
-        return;
-    }
-    int mid=l+(r-l)/2;
-    add(2*node,l,mid,ql,qr,e);
-    add(2*node+1,mid+1,r,ql,qr,e);
-}
-
-vector<int>ans;
-const int MAXN = 100005;
-
-int treePar[MAXN],bcc[MAXN],dep[MAXN];
-int bridges=0;
-
-int find(int x){
-    return bcc[x]==x?x:bcc[x]=find(bcc[x]);
-}
-
-int lca(int u,int v){
-    while(true){
-        int a=find(u),b=find(v);
-        if(a==b) return a;
-        if(dep[a]>dep[b]) u=treePar[a];
-        else v=treePar[b];
-    }
-}
-
-void contract(int u,int top){
-    while(find(u)!=find(top)){
-        int f=find(u);
-        int p=find(treePar[f]);
-        bcc[f]=p;
-        bridges--;
-        u=p;
-    }
-}
-
-int treeRoot(int u){
-    while(treePar[find(u)]!=0) u=treePar[find(u)];
-    return find(u);
-}
-
-void addEdge(int u,int v){
-    u=find(u),v=find(v);
-    if(u==v) return;
-
-    if(treeRoot(u)!=treeRoot(v)){
-        bridges++;
-        treePar[u]=v;
-        dep[u]=dep[v]+1;
-    }else{
-        int l=lca(u,v);
-        contract(u,l);
-        contract(v,l);
-    }
-}
-
-vector<int>factor(int n){
-    vector<int>arr;
-    for(int i=1;i*i<=n;i++){
-        if(n%i==0){
-            arr.push_back(i);
-            if(i!=n/i){
-                arr.push_back(n/i);
-            }
-        }
-    }
-    return arr;
-}
 void solve(){
-    int n,m;
-    cin>>n>>m;
-    vector<vector<char>>arr(n,vector<char>(m,'#'));
-    bool flag=false;
+    int n;
+    cin>>n;
+    int ans=0;
     for(int i=0;i<n;i++){
-        for(int j=0;j<m;j++){
-            if(i&1){
-                if(flag){
-                    if(j==0) cout<<arr[i][j];
-                    else cout<<".";
-                }else{
-                    if(j==m-1) cout<<arr[i][j];
-                    else cout<<".";
-                }
-            }else{
-                cout<<arr[i][j];
-            }
-        }
-        if(i&1) flag=!flag;
-        nline;
+        string s;
+        cin>>s;
+        if(s=="Tetrahedron") ans+=4;
+        if(s=="Cube") ans+=6;
+        if(s=="Octahedron") ans+=8;
+        if(s=="Dodecahedron") ans+=12;
+        if(s=="Icosahedron") ans+=20;
     }
+    cout<<ans<<endl;
 }
 
-int32_t main(){
-#ifdef Zenith08
-    freopen("Error.txt","w",stderr);
-    // freopen("connect.in","r",stdin);
-    // freopen("connect.out","w",stdout);
-#endif    
-
-    fastio();
-
-    auto start=chrono::high_resolution_clock::now();
-
+int main(){
     int t=1;
-    //cin>>t;
-    while(t--){
-        solve();
-    }
-    auto stop=chrono::high_resolution_clock::now();
-    auto duration=duration_cast<microseconds>(stop-start);
-#ifdef Zenith08
-    cerr<<"Time:"<<duration.count()/1000<<" ms"<<endl;
-#endif
-
+    // cin>>t;
+    while(t--) solve();
     return 0;
 }
