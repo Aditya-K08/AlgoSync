@@ -166,16 +166,18 @@ vector<int>factor(int n){
     return arr;
 }
 void solve(){
-    int x=0;
-    int n;
-    cin>>n;
-    rep(i,0,n){
-        string s;
-        cin>>s;
-        if(s[0]=='+' || s[2]=='+') x++;
-        if(s[0]=='-' || s[2]=='-') x--;
+    int x=-1,y=-1;
+    for(int i=1;i<=5;i++){
+        for(int j=1;j<=5;j++){
+            int n;
+            cin>>n;
+            if(n==1){
+                x=i;
+                y=j;
+            }
+        }
     }
-    cout<<x<<endl;
+    cout<<abs(x-3)+abs(y-3)<<endl;
 }
 
 int32_t main(){
