@@ -166,21 +166,27 @@ vector<int>factor(int n){
     return arr;
 }
 void solve(){
-    int n;
-    cin>>n;
-    int p=1;
-    int cnt=0;
-    vector<int>arr;
-    while(n){
-        int r=n%10;
-        n/=10;
-        r*=p;
-        p*=10;
-        if(r) arr.push_back(r);
+    int n,m;
+    cin>>n>>m;
+    vector<vector<char>>arr(n,vector<char>(m,'#'));
+    bool flag=false;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(i&1){
+                if(flag){
+                    if(j==0) cout<<arr[i][j];
+                    else cout<<".";
+                }else{
+                    if(j==m-1) cout<<arr[i][j];
+                    else cout<<".";
+                }
+            }else{
+                cout<<arr[i][j];
+            }
+        }
+        if(i&1) flag=!flag;
+        nline;
     }
-    cout<<arr.size()<<"\n";
-    for(int x:arr) cout<<x<<" ";
-    nline;
 }
 
 int32_t main(){
@@ -195,7 +201,7 @@ int32_t main(){
     auto start=chrono::high_resolution_clock::now();
 
     int t=1;
-    cin>>t;
+    //cin>>t;
     while(t--){
         solve();
     }
