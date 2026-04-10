@@ -166,11 +166,21 @@ vector<int>factor(int n){
     return arr;
 }
 void solve(){
-    int x,y,z;
-    cin>>x>>y>>z;
-    int mid=(x+y+z)/3;
-    int ans=abs(x-mid)+abs(y-mid)+abs(z-mid);
-    cout<<ans<<endl;
+    int n;
+    cin>>n;
+    int p=1;
+    int cnt=0;
+    vector<int>arr;
+    while(n){
+        int r=n%10;
+        n/=10;
+        r*=p;
+        p*=10;
+        if(r) arr.push_back(r);
+    }
+    cout<<arr.size()<<"\n";
+    for(int x:arr) cout<<x<<" ";
+    nline;
 }
 
 int32_t main(){
@@ -185,7 +195,7 @@ int32_t main(){
     auto start=chrono::high_resolution_clock::now();
 
     int t=1;
-    //cin>>t;
+    cin>>t;
     while(t--){
         solve();
     }
