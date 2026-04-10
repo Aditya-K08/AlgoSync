@@ -166,14 +166,10 @@ vector<int>factor(int n){
     return arr;
 }
 void solve(){
-    int n,k,l,c,d,p,nl,np;
-    cin>>n>>k>>l>>c>>d>>p>>nl>>np;
-
-    int mili=k*l;
-    int lem=d*c;
-    int r1=mili/nl;
-    int r2=p/np;
-    int ans=min({r1,r2,lem})/n;
+    int x,y,z;
+    cin>>x>>y>>z;
+    int mid=(x+y+z)/3;
+    int ans=abs(x-mid)+abs(y-mid)+abs(z-mid);
     cout<<ans<<endl;
 }
 
