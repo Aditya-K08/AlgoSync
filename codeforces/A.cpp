@@ -4,17 +4,25 @@ using namespace std;
 void solve(){
     int n;
     cin>>n;
-    int ans=0;
+    vector<int>arr(n);
+    for(auto &x:arr) cin>>x;
+    int mx=*max_element(arr.begin(),arr.end());
+    int mn=*min_element(arr.begin(),arr.end());
+    int st=-1,ed=-1;
     for(int i=0;i<n;i++){
-        string s;
-        cin>>s;
-        if(s=="Tetrahedron") ans+=4;
-        if(s=="Cube") ans+=6;
-        if(s=="Octahedron") ans+=8;
-        if(s=="Dodecahedron") ans+=12;
-        if(s=="Icosahedron") ans+=20;
+        if(mx==arr[i] && st==-1){
+            st=i;
+        }
+        if(mn==arr[i]){
+            ed=i;
+        }
     }
-    cout<<ans<<endl;
+    int ans;
+    if(st<ed){
+        cout<<st+(n-1-ed)<<endl;
+    }else{
+        cout<<st+(n-1-ed)-1<<endl;
+    }
 }
 
 int main(){
