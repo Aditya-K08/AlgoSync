@@ -6,12 +6,11 @@ void solve(){
     cin>>n;
     vector<int>arr(n);
     for(auto &x:arr) cin>>x;
-    int cnt=count(arr.begin(),arr.end(),1);
-    if(cnt>0){
-        cout<<"HARD"<<endl;
-    }else{
-        cout<<"EASY"<<endl;
+    vector<int>pos(n+1);
+    for(int i=0;i<n;i++){
+        pos[arr[i]]=i+1;
     }
+    for(int i=1;i<=n;i++) cout<<pos[i]<<" ";
 }
 
 int main(){
